@@ -15,7 +15,20 @@ module.exports = {
     // 调整内部的 webpack 配置。
     // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/webpack.md
     chainWebpack: () => {},
-    configureWebpack: () => {},
+    configureWebpack: (config) => {
+        config.resolve = { //配置解析别名
+            extensions: ['.js', '.json', '.vue'],
+            alias: {
+                '@': path.resolve(__dirname, './src'),
+                // 'public': path.resolve(__dirname, './public'),
+                // 'components': path.resolve(__dirname, './src/components'),
+                // 'common': path.resolve(__dirname, './src/common'),
+                // 'api': path.resolve(__dirname, './src/api'),
+                // 'views': path.resolve(__dirname, './src/views'),
+                // 'data': path.resolve(__dirname, './src/data'),
+            }
+        }
+    },
 
     // CSS 相关选项
     css: {
@@ -56,6 +69,15 @@ module.exports = {
         hotOnly: false,
         // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/cli-service.md#配置代理
         proxy: null, // string | Object
+        proxy: {
+            '/devApi': {
+                target: 'http://www.web-jshtml.cn/productapi/token',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/devApi': ''
+                }
+            }
+        },
         before: app => {}
     },
 
