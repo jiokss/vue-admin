@@ -32,7 +32,7 @@ service.interceptors.response.use(function(response) {
     let data = response.data
     if (data.code != 0) {
         console.log(data.message);
-        return Promise.reject(error);
+        return Promise.reject(data.message);
     } else {
         return response;
     }

@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { getsms } from '@/api/login.js'
+import { getsms, Login } from '@/api/login.js'
 import { stripscript,validateForm } from '@/utils/validate'
 export default {
    name:'login',
@@ -102,10 +102,10 @@ export default {
          ],
          isActive:0,
          ruleForm: {
-          username: '',
-          password: '',
+          username: '123@qq.com',
+          password: '123456aa',
           passwords: '',
-          code: ''
+          code: '123422'
         },
         status:{
            text:'发送验证码',
@@ -134,9 +134,38 @@ export default {
 
       },
        submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
+         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            
+            this.$store.dispatch('login/setLogin',{
+               username:this.ruleForm.username,
+               password:this.ruleForm.password,
+               code:this.ruleForm.code,
+            })
+            .then(res=>{
+               console.log(res)
+            })
+            .catch(err=>{
+               this.$router.push({name:'Console'});
+            })
+
+
+            // Login({
+            //    username:this.ruleForm.username,
+            //    password:this.ruleForm.password,
+            //    code:this.ruleForm.code,
+            //    })
+            // .then(res=>{
+              
+            // })
+            // .catch(err=>{
+            //    this.$message({
+            //       message: err,
+            //       type: 'success'
+            //    });
+            //    this.$router.push({name:'Console'});
+            // })
+            // this.$router.push({name:'Console'});
           } else {
             console.log('error submit!!');
             return false;

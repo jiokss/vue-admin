@@ -8,3 +8,12 @@ export function getsms(data) {
         data: data
     });
 }
+
+//登录
+export function Login(data) {
+    return service.request({
+        method: 'post',
+        url: '/login/',
+        data: data
+    });
+}
