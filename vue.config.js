@@ -14,11 +14,21 @@ module.exports = {
 
     // 调整内部的 webpack 配置。
     // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/webpack.md
-    chainWebpack: () => {},
+    chainWebpack: (config) => {
+        const svgRule = config.module.rule("svg");
+        svgRule.uses.clear();
+        svgRule.use("svg-sprite-loader")
+            .loader("svg-sprite-loader")
+            .options({
+                symbolId: 'icon-[name]',
+                include: ["./src/icons"]
+            });
+    },
     configureWebpack: (config) => {
         config.resolve = { //配置解析别名
             extensions: ['.js', '.json', '.vue'],
             alias: {
+                'vue': 'vue/dist/vue.esm.js',
                 '@': path.resolve(__dirname, './src'),
                 // 'public': path.resolve(__dirname, './public'),
                 // 'components': path.resolve(__dirname, './src/components'),
